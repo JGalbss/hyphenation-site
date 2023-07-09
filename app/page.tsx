@@ -8,7 +8,6 @@ import { useAccount, useContractRead, useNetwork } from 'wagmi';
 import AdoptAHiphen from '@/public/adopt-a-hyphen.svg';
 import Logo from '@/public/hyphen-logo.svg';
 
-import ADOPT_A_HYPHEN_ABI from '@/lib/abis/adopt-a-hyphen';
 import ZORA_ABI from '@/lib/abis/zora';
 
 import Button from '@/components/common/button';
