@@ -91,7 +91,10 @@ const ApprovalBox = () => {
         onClick={() => write?.()}
         color="blue"
       >
-        {isSignLoading || isTxLoading ? 'Loading...' : 'Approve'}
+        {isSignLoading && 'CONFIRM'}
+        {(isSignSuccess || isTxLoading) && 'APPROVING'}
+        {isTxSuccess && 'APPROVED!'}
+        {!isSignLoading && !isSignSuccess && !isTxSuccess && !isTxLoading && 'APPROVE'}
       </Button>
     </div>
   );
