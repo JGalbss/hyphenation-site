@@ -21,13 +21,6 @@ export default function Home() {
   const [nfts, setNfts] = useState<any[]>([]); // TODO: Type this
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const { data: isApprovedForAll } = useContractRead({
-    address: process.env.NEXT_PUBLIC_TICKET_ADDRESS,
-    abi: ZORA_ABI,
-    functionName: 'isApprovedForAll',
-    args: [address, process.env.NEXT_PUBLIC_ADOPT_ADDRESS],
-  });
-
   const { data: totalSupply } = useContractRead({
     address: process.env.NEXT_PUBLIC_TICKET_ADDRESS,
     abi: ZORA_ABI,
@@ -85,7 +78,7 @@ export default function Home() {
 
         {/* Mint/Approval a hyphen box */}
         <MintBox />
-        {!isApprovedForAll ? <ApprovalBox /> : null}
+        <ApprovalBox />
 
         {/* NFTs */}
         {isLoaded && nfts.length > 0 && (

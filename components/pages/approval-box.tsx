@@ -1,20 +1,30 @@
 'use client';
 
-import { useState } from 'react';
-
 import { useToast } from '@/hooks/useToast';
-import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
+import {
+  useAccount,
+  useContractRead,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from 'wagmi';
 
 import ZORA_ABI from '@/lib/abis/zora';
 
 import Button from '@/components/common/button';
 
 const ApprovalBox = () => {
-  const [isApprovedForAll, setIsApprovedForAll] = useState(false);
-
   const { toast } = useToast();
+  const { address } = useAccount();
 
   /* Contract interaction */
+  const { data: isApprovedForAll, refetch: refetchApprovalStatus } = useContractRead({
+    address: process.env.NEXT_PUBLIC_TICKET_ADDRESS,
+    abi: ZORA_ABI,
+    functionName: 'isApprovedForAll',
+    args: [address, process.env.NEXT_PUBLIC_ADOPT_ADDRESS],
+  });
+
   const { config, error } = usePrepareContractWrite({
     address: process.env.NEXT_PUBLIC_TICKET_ADDRESS,
     abi: ZORA_ABI,
@@ -55,7 +65,7 @@ const ApprovalBox = () => {
         variant: 'success',
         title: 'Transaction success!',
       });
-      setIsApprovedForAll(true);
+      refetchApprovalStatus();
       reset();
     },
   });
