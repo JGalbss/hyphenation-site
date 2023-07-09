@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-import { useAccount, useContractRead, useContractWrite, useNetwork } from 'wagmi';
+import { useAccount, useContractRead, useNetwork } from 'wagmi';
 
 import AdoptAHiphen from '@/public/adopt-a-hyphen.svg';
 import Logo from '@/public/hyphen-logo.svg';
@@ -45,16 +45,6 @@ export default function Home() {
   }
 
   useEffect(() => {
-    // async function fetchNfts() {
-    //   if (address) {
-    //     const res = await fetch(`/api/fetchNFTs?address=${address}`);
-    //     const data = await res.json();
-    //     setNfts(data.ownedNfts);
-    //   }
-
-    //   setIsLoaded(true);
-    // }
-
     fetchNfts();
   }, [address, chain]);
 
@@ -122,7 +112,8 @@ export default function Home() {
                       color="black"
                       onClick={() => {
                         window.open(
-                          // `https://opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}` //TODO: switch to mainnet
+                          // `https://opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}`
+                          // @TODO: switch to mainnet
                           `https://testnets.opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}`,
                           '_blank',
                         );
