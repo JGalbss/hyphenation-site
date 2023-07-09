@@ -33,7 +33,13 @@ const ApprovalBox = () => {
     chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
   });
 
-  const { data, write, reset } = useContractWrite({
+  const {
+    data,
+    write,
+    reset,
+    isLoading: isSignLoading,
+    isSuccess: isSignSuccess,
+  } = useContractWrite({
     ...config,
     onError: () => {
       toast({
@@ -50,7 +56,7 @@ const ApprovalBox = () => {
     },
   });
 
-  useWaitForTransaction({
+  const { isLoading: isTxLoading, isSuccess: isTxSuccess } = useWaitForTransaction({
     hash: data?.hash,
     onError: () => {
       toast({
@@ -80,8 +86,12 @@ const ApprovalBox = () => {
       <div className="text-center text-xs text-white md:text-sm">
         Approve your Adoption Tickets to enable redemption.
       </div>
-      <Button onClick={() => write?.()} color="blue">
-        APPROVE ALL
+      <Button
+        disabled={isSignLoading || isSignSuccess || isTxLoading || isTxSuccess}
+        onClick={() => write?.()}
+        color="blue"
+      >
+        {isSignLoading || isTxLoading ? 'Loading...' : 'Approve'}
       </Button>
     </div>
   );
